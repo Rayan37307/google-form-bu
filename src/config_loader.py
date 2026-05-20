@@ -22,7 +22,16 @@ class Config:
         self.email_password = os.getenv("EMAIL_PASSWORD", "")
 
         self.email_subject = os.getenv("EMAIL_SUBJECT", "You're invited to Canva Pro!")
-        self.email_body = os.getenv("EMAIL_BODY", "Hi, you've been invited to join Canva Pro.")
+        self.email_body = os.getenv("EMAIL_BODY", """আমাদের স্পেশাল মেম্বার হিসেবে তোমার ক্রিয়েটিভিটিকে আরেকটু বুস্ট করতে এই ছোট্ট উপহার। আজ থেকে ডিজাইনে আর কোনো লিমিটেশন থাকছে না—You are now on Canva Pro! 🔥
+
+📥 অ্যাক্সেস নাও এখান থেকে:
+নিচের লিংকে ক্লিক করে সরাসরি আমাদের ক্যানভা টিমে জয়েন করে নাও:
+
+👉 https://www.canva.com/brand/join?token=ivg7GTMtPfKHLcEInMeNCg&brandingVariant=edu&referrer=team-invite 👈
+
+নোট: এই এক্সক্লুসিভ লিংকটি শুধু তোমার জন্যই, তাই শেয়ার না করার অনুরোধ রইলো।
+
+Keep crushing it!""")
 
         self.poll_interval = int(os.getenv("POLL_INTERVAL_SECONDS", "60"))
 
