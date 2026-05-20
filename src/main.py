@@ -44,20 +44,17 @@ def run_once():
         log.info("No new matching emails found.")
         return
 
-    sent = []
+    sent = 0
     for email in to_send:
         try:
             send_canva_invitation(email)
-            sent.append(email)
+            log_sent_emails([email])
+            sent += 1
             log.info("Invitation sent to %s", email)
         except Exception as e:
-            log.error("Failed to send to %s: %s\n%s", email, e, traceback.format_exc())
+            log.error("Failed to send/log for %s: %s\n%s", email, e, traceback.format_exc())
 
-    try:
-        log_sent_emails(sent)
-    except Exception as e:
-        log.error("Failed to log sent emails: %s\n%s", e, traceback.format_exc())
-    log.info("Sent %d invitation(s).", len(sent))
+    log.info("Sent %d invitation(s).", sent)
 
 
 def main():
