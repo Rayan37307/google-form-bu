@@ -1,4 +1,5 @@
 import time
+import traceback
 import logging
 
 from src.config_loader import config
@@ -19,9 +20,23 @@ log = logging.getLogger(__name__)
 def run_once():
     log.info("Checking Google Sheet for new emails...")
 
-    sheet_emails = fetch_email_column()
-    dataset_emails = load_dataset_emails()
-    already_sent = load_already_sent()
+    try:
+        sheet_emails = fetch_email_column()
+    except Exception as e:
+        log.error("Failed to fetch emails from sheet: %s\n%s", e, traceback.format_exc())
+        return
+
+    try:
+        dataset_emails = load_dataset_emails()
+    except Exception as e:
+        log.error("Failed to load dataset: %s\n%s", e, traceback.format_exc())
+        return
+
+    try:
+        already_sent = load_already_sent()
+    except Exception as e:
+        log.error("Failed to load sent cache: %s\n%s", e, traceback.format_exc())
+        return
 
     to_send = find_matches(sheet_emails, dataset_emails, already_sent)
 
@@ -36,9 +51,12 @@ def run_once():
             sent.append(email)
             log.info("Invitation sent to %s", email)
         except Exception as e:
-            log.error("Failed to send to %s: %s", email, e)
+            log.error("Failed to send to %s: %s\n%s", email, e, traceback.format_exc())
 
-    log_sent_emails(sent)
+    try:
+        log_sent_emails(sent)
+    except Exception as e:
+        log.error("Failed to log sent emails: %s\n%s", e, traceback.format_exc())
     log.info("Sent %d invitation(s).", len(sent))
 
 
@@ -55,7 +73,7 @@ def main():
         try:
             run_once()
         except Exception as e:
-            log.error("Poll cycle failed: %s", e)
+            log.error("Poll cycle failed: %s\n%s", e, traceback.format_exc())
         time.sleep(config.poll_interval)
 
 
