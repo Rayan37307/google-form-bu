@@ -73,7 +73,7 @@ def _pick_column(worksheet):
 
 def _pick_dataset():
     print("\n--- Dataset CSV ---")
-    default = os.getenv("DATASET_PATH", "config/dataset.csv")
+    default = os.getenv("DATASET_PATH", "config/email1.csv")
     path = input(f"Path to dataset CSV (default: {default}): ").strip()
     return path or default
 

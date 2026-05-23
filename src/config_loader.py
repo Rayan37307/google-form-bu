@@ -13,7 +13,7 @@ class Config:
         self.sheet_tab_name = os.getenv("SHEET_TAB_NAME", "Sheet1")
         self.email_column_name = os.getenv("EMAIL_COLUMN_NAME", "email")
 
-        self.dataset_path = os.getenv("DATASET_PATH", "config/dataset.csv")
+        self.dataset_path = os.getenv("DATASET_PATH", "config/email1.csv")
         self.dataset_email_column = os.getenv("DATASET_EMAIL_COLUMN", "email")
 
         self.smtp_server = os.getenv("SMTP_SERVER", "smtp.gmail.com")

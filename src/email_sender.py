@@ -12,5 +12,6 @@ def send_canva_invitation(recipient_email):
 
     with smtplib.SMTP(config.smtp_server, config.smtp_port) as server:
         server.starttls()
-        server.login(config.email_sender, config.email_password)
+        if config.email_password:
+            server.login(config.email_sender, config.email_password)
         server.send_message(msg)
